@@ -39,24 +39,71 @@
 			'カーマス': 'kama.png',
 		};
 	</script>
+	<style type="text/css">
+		@font-face {
+			font-family: kitsune;
+			src: url(BIZ-UDMinchoM.ttc);
+		}
+		body
+		{
+			font-family: kitsune, "BIZ UD明朝 Medium", "BIZ UD明朝";
+		}
+		label
+		{
+			margin-top: 20px;
+			display: inline-block;
+		}
+		#title_block
+		{
+			margin-bottom: 20px;
+		}
+		#title
+		{
+			#color: #FF0000;
+			font-size: 50px;
+			font-weight: bold;
+			background: -webkit-linear-gradient(right, #ff0000, #333);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+		}
+		#mark
+		{
+			font-size: 15px;
+		}
+		#race_atk
+		{
+			width: 560px;
+			padding-bottom: 8px;
+			margin-bottom: 8px;
+			border-bottom-width: 2px;
+			border-bottom-color: red;
+			border-bottom-style: outset;
+		}
+	</style>
 </head>
 <body>
-    <h1>Monster Calculator</h1>
-    <form id="monsterForm">
-        <label for="hunt">狩場：</label>
-        <select id="hunt" name="hunt" onchange="recalc();">	
-        </select><br><br>
-        <label for="monsterAP">モンスターAP：</label>
-        <input type="number" id="monsterAP" name="monsterAP" value="1000" onchange="recalc();"><br><br>
-        <label for="attack">種族攻撃力：</label>
-        <input type="number" id="attack" name="attack" value="1" onchange="recalc();"><br><br>
-		<label>種族：</label><img id="race_img" src="" /><label id="race_text"></label><br />
-		<label>ソフトキャップ：</label>
-		<label id="softcap"></label><br />
-		<label>理論攻撃力：</label>
-		<label id="ap"></label><br />
-        <!--<input type="submit" value="計算">-->
-    </form>
+	<div id="title_block">
+    <span id="title">Monster Calculator</span>
+	<span id="mark"><a href="https://twitter.com/Kitsune_BD" target="_blank">(c)Kitsune_BD</a></span></div>
+	<label for="hunt">狩場：</label>
+	<select id="hunt" name="hunt" onchange="recalc();">	
+	</select><br><br>
+	<label for="monsterAP">モンスターAP：</label>
+	<input type="number" id="monsterAP" name="monsterAP" value="1000" onchange="recalc();"><br><br>
+	<div id="race_atk">
+	<label for="attack">種族攻撃力：</label>
+	<input type="number" id="attack" name="attack" value="28" onchange="recalc();"><br>
+	</div>
+	<label>種族：</label><img id="race_img" src="" /><label id="race_text"></label><br />
+	<label>ソフトキャップ：</label>
+	<label id="softcap"></label><br />
+	<label>理論攻撃力：</label>
+	<label id="ap"></label><br /><br />
+	<input id="fname" type="text" placeholder="セット名前">
+	<input type="submit" value="セーブ" onclick="save();"><br />
+	<table id="save_tbl">
+		<tr><td>種族</td><td align=center>狩場名</td><td align=center>ｿﾌﾄｷｬｯﾌﾟ</td><td align=center>理論攻撃力</td><td>PS</td></tr>
+	</table>
 	<script>
 		var sel = document.getElementById("hunt");
 		for (var i=0; i<data.length; i++)
@@ -73,6 +120,10 @@
 		var race_text_c = document.getElementById("race_text");
 		var mon_ap = document.getElementById("monsterAP");
 		var race_ap = document.getElementById("attack");
+		
+		var fname = document.getElementById("fname");
+		var val_ary = [];
+		var tbl = document.getElementById("save_tbl");
 		
 		recalc();
 		
@@ -93,6 +144,46 @@
 			ap.innerHTML = '<font color="red">' + final_ap + '</font>';
 			icon_c.src = icon_data[val[RACE]];
 			race_text_c.innerHTML = '<font color="red">' + val[RACE] + '</font>';
+		}
+		
+		function save()
+		{
+			var cur = sel.value;
+			var val = data[cur];
+			var base_ap = val[SOFTCAP];
+			var over_ap = mon_ap.value - base_ap;
+			if (over_ap > 0)
+			{
+				over_ap *= val[RATE];
+				over_ap /= 100;
+			}
+			var final_ap = base_ap + over_ap + race_ap.value * 0.8;
+			final_ap = Math.floor(final_ap);
+			
+			var row = tbl.insertRow(1);
+			var t;
+			
+			t = row.insertCell(0);
+			var img = document.createElement("img");
+			img.src = icon_data[val[RACE]];
+			t.append(img);
+			
+			t = row.insertCell(1);
+			t.align = "center";
+			t.innerHTML = val[HNAME];
+			
+			t = row.insertCell(2);
+			t.align = "center";
+			t.innerHTML = '<font color="red">' + val[SOFTCAP] + '</font>';
+			
+			t = row.insertCell(3);
+			t.align = "center";
+			t.innerHTML = '<font color="red">' + final_ap + '</font>';
+			
+			t = row.insertCell(4);
+			t.innerHTML = fname.value;
+			
+			return false;
 		}
 	</script>
 </body>
