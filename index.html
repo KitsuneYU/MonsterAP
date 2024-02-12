@@ -142,7 +142,14 @@
 			}
 			var final_ap = base_ap + over_ap + race_ap.value * 0.8;
 			final_ap = Math.floor(final_ap);
-			ap.innerHTML = '<font color="red">' + final_ap + '</font>';
+			var dif = final_ap - base_ap;
+			var dif_txt = "+" + dif;
+			if (dif < 0)
+			{
+				dif_txt = dif;
+			}
+			var total_txt = final_ap + " (" + dif_txt + ")";
+			ap.innerHTML = '<font color="red">' + total_txt + '</font>';
 			icon_c.src = icon_data[val[RACE]];
 			race_text_c.innerHTML = '<font color="red">' + val[RACE] + '</font>';
 		}
@@ -160,6 +167,13 @@
 			}
 			var final_ap = base_ap + over_ap + race_ap.value * 0.8;
 			final_ap = Math.floor(final_ap);
+			var dif = final_ap - base_ap;
+			var dif_txt = "+" + dif;
+			if (dif < 0)
+			{
+				dif_txt = dif;
+			}
+			var total_txt = final_ap + " (" + dif_txt + ")";
 			
 			var row = tbl.insertRow(1);
 			var t;
@@ -179,7 +193,7 @@
 			
 			t = row.insertCell(3);
 			t.align = "center";
-			t.innerHTML = '<font color="red">' + final_ap + '</font>';
+			t.innerHTML = '<font color="red">' + total_txt + '</font>';
 			
 			t = row.insertCell(4);
 			t.innerHTML = fname.value;
