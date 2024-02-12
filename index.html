@@ -4,99 +4,85 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monster Calculator</title>
+	<script>
+		const RACE = 0;
+		const HNAME = 1;
+		const SOFTCAP = 2;
+		const RATE = 3;
+		const data = [
+			['人間', 'ビラーギ山塞', 753, 5],
+			['亜人', '祭壇インプ生息地', 753, 5],
+			['人間', '廃城跡', 774, 5],
+			['亜人', '沼フォガン生息地', 803, 5],
+			['亜人', '湿原ナーガ生息地', 803, 5],
+			['亜人', 'オークキャンプ', 856, 5],
+			['人間', 'ブラッディ修道院', 856, 5],
+			['亜人', '星の墓場', 470, 70],
+			['人間', '放棄された修道院', 490, 70],
+			['人間', 'パディクス島', 530, 70],
+			['亜人', 'サウニールキャンプ', 813, 5],
+			['亜人', 'ルツム駐屯地', 835, 5],
+			['人間', 'ジャイアント族駐屯地', 856, 5],
+			['動物', 'ヘッセ聖域', 898, 5],
+			['亜人', 'トロル生息地', 920, 5],
+			['カーマス', '[デキア] オルン渓谷', 1000, 70],
+			['カーマス', 'オルン渓谷', 830, 70],
+			['カーマス', '苦悩が眠る墓', 830, 70],
+			['カーマス', '[デキア] ツンクタ', 950, 30],
+			['カーマス', '灰色の森', 830, 70],
+			['カーマス', '[デキア] 灰色の森', 1000, 70]
+		];
+	</script>
 </head>
 <body>
     <h1>Monster Calculator</h1>
     <form id="monsterForm">
         <label for="hunt">狩場：</label>
-        <select id="hunt" name="hunt">
-		<option value='1'>ビラーギ山塞</option>
-		<option value='2'>祭壇インプ生息地</option>
-		<option value='3'>廃城跡</option>
-		<option value='4'>沼フォガン生息地</option>
-		<option value='5'>湿原ナーガ生息地</option>
-		<option value='6'>オークキャンプ</option>
-		<option value='7'>ブラッディ修道院</option>
-		<option value='8'>星の墓場</option>
-		<option value='9'>放棄された修道院</option>
-		<option value='10'>パディクス島</option>
-		<option value='11'>サウニールキャンプ</option>
-		<option value='12'>ルツム駐屯地</option>
-		<option value='13'>ジャイアント族駐屯地</option>
-		<option value='14'>ヘッセ聖域</option>
-		<option value='15'>トロル生息地</option>
-		<option value='16'>[デキア] オルン渓谷</option>
-		<option value='17'>オルン渓谷</option>
-		<option value='18'>苦悩が眠る墓</option>
-		<option value='19'>[デキア] ツンクタ</option>
-		<option value='20'>灰色の森</option>
-		<option value='21'>[デキア] 灰色の森</option>	
-            <!-- Add more options as needed -->
+        <select id="hunt" name="hunt" onchange="recalc();">	
         </select><br><br>
         <label for="monsterAP">モンスターAP：</label>
-        <input type="number" id="monsterAP" name="monsterAP" value="1000"><br><br>
+        <input type="number" id="monsterAP" name="monsterAP" value="1000" onchange="recalc();"><br><br>
         <label for="attack">種族攻撃力：</label>
-        <input type="number" id="attack" name="attack" value="1"><br><br>
-        <input type="submit" value="計算">
+        <input type="number" id="attack" name="attack" value="1" onchange="recalc();"><br><br>
+		<label>ソフトキャップ</label>
+		<label id="softcap"></label><br />
+		<label>理論攻撃力</label>
+		<label id="ap"></label><br />
+        <!--<input type="submit" value="計算">-->
     </form>
-
-    <script>
-        // 將 JSON 憑證文件的內容作為 JavaScript 對象嵌入到代碼中
-        const credentials = {
-            "type": "service_account",
-            "project_id": "Monster Calculator",
-            "private_key_id": "9ac6c63b9a7ed01ada287f21eef4ebadeff7d410",
-              "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCixALEhKbqPAYQ\nEK+xYjBZmGFmnTyAicu27fQNshPLr//nRwI/EUeF290eB/ekB9c9Mr4+hjWmwLIi\nTCujZCoGyaoHgnTBKcbBHMfEvGtXjVcsgWu4DybjziWQDT3sNxIblFCPxnxAjHjr\nL4F+u4nw/g18IIAPxp2/JHvXtSonwP8vxUrFc5pkK27rrRbUgybP6X9uO2BvbvTK\ndttCAzlz5cYn5X5TICHI2BLIc95tj/9A180H5c6RSRXMYEVlyFXFtHNPJKn+ZX2g\nqNlwsnF9wkTdhVvsnn9g9MDSWx+zu1oVbvmtFRfXSTYtsx6LDtUefzxBkOnHf6HW\nkEtLrohHAgMBAAECggEAOpt1m6lgKMuAK1y2xppiaoBx4e8QEACN98pqrFvIwPkY\nngB1kJv6Mvrd/ahExS2FlSWmVwEgZHDSM4NV2zl/4H3Q2W9h9wPB61sfm3l09UuR\nbhcT4GykRja+U8ZQ27Ngs8mN0JdZuixaheTPLgD9RGdWF7HkKsoLlv3eEefLzBAg\n0Yc0fdO8IWlXkuOP0+25pqaik9x/LNZ5QBVEPbFthqT2wvmtagbwbaIFt+n5KKdU\nai+fOgpXIuYookWN3xDiNpuBnrE5/oriuPvWSdtjFWum+H9vdfUrTdEqTMOxzn84\n0QIaUwcXfgBK8NvrLvKJA12HCj++VV7gDYOm3Nl5QQKBgQDdtjjxd3dVmK6yZqtE\nGG+05JWG5V1NLj+GvNON5Z6bt613iaD8W6pGsZfuKzcEtWU4Tfegt5RcnzPnHHqB\npC2nXBFTw7wIQG4x449hPeK7nDbpqfOfCuQp3bjSuTUWCvtj6p9+7ISaXbhny8Wc\nWrmBc6oHcDKuADZmxAwFtFXikQKBgQC78A4/QeBNVLmVydEgvXKcjJ5bDeDtjYo6\n18fsPF9Jh4NiYndyix/o+HU99OrpcVf1u3CofOjgLGO6zNE3Xx1NtzpTT5Tiv382\nWNq6/AJGgLm3zTMY1tRKlqXJijtsrluvx8xXOOwyWU4Ohv+JwGceXAY8kOYG9Nua\ncnD1J+h5VwKBgQCUQbXyQiDabC7lvSHpdy27mN8kRVwOsE5qmvoceN+G4VxuAupT\n1jgW7crayKsRyvrUm85q+leLWCos8S46Yr7kmvw7NzgVjIAjfDf0np1vNxbBSZRP\nVckc9dcRkiedhdp1Bf+BsEc7slANmIWb+E7z8ZRRRQWetSWrso0Xg2+rAQKBgEZS\nGmKc+Zq12wMrEq8Xc+0TyKT1WnZIgbJmzw2bwWO36vdDNMKNQBFh9iyKmeNjX7A4\nxHym0FQhB+f7f0Uit8o+hvppSqJVWPoy4RUZ+pf6zoLxqu7eY2zNVZdFu9p8mx34\nuoLgb7CfLc/Nv4wBjBQWBtdeuFNeB1WRAKcamafdAoGABtx7Xllbte8PK8n8A0gI\nfJVTighHqOFRsErQAbxklFFdMPnaE1fVYjfxcoOyvjoF4YqaUfBA7MdaJD29Mtlz\nQeYVnxnvaU6GbF8FmOkG1QnqNcVL0DSFVzqLHyTevALnU33q8Kgse4s259lxOWwU\nWB4AmVBAmKyTIXDlr8NQuzA=\n-----END PRIVATE KEY-----\n",
-            "client_email": "monster-calculator@monster-calculator.iam.gserviceaccount.com",
-            "client_id": "109333489746521265632",
-			"auth_uri": "https://accounts.google.com/o/oauth2/auth",
-			"token_uri": "https://oauth2.googleapis.com/token",
-			"auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-			"client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/monster-calculator%40monster-calculator.iam.gserviceaccount.com",
-			"universe_domain": "googleapis.com"
+	<script>
+		var sel = document.getElementById("hunt");
+		for (var i=0; i<data.length; i++)
+		{
+			var op = document.createElement("option");
+			op.text = data[i][HNAME] + " (" + data[i][RACE] + ")";
+			op.value = i;
+			sel.append(op);
+		}
+		
+		var softcap = document.getElementById("softcap");
+		var ap = document.getElementById("ap");
+		var mon_ap = document.getElementById("monsterAP");
+		var race_ap = document.getElementById("attack");
+		
+		recalc();
+		
+		function recalc()
+		{
+			var cur = sel.value;
+			var val = data[cur];
+			softcap.innerHTML = '<font color="red">' + val[SOFTCAP] + '</font>';
+			var base_ap = val[SOFTCAP];
+			var over_ap = mon_ap.value - base_ap;
+			if (over_ap > 0)
+			{
+				over_ap *= val[RATE];
+				over_ap /= 100;
 			}
-
-        document.getElementById("monsterForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-            const formData = new FormData(this);
-            const hunt = formData.get("hunt");
-            const monsterAP = formData.get("monsterAP");
-            const attack = formData.get("attack");
-            // Send data to Google Sheets
-            sendDataToGoogleSheets(hunt, monsterAP, attack);
-        });
-
-        function sendDataToGoogleSheets(hunt, monsterAP, attack) {
-            // 在這裡，您可以使用 client 來執行與 Google Sheets 相關的操作
-			// 使用 credentials 對象中的憑證信息初始化 Google API 客戶端
-			// API key: AIzaSyAJRuzYzKzpWOSoFFD33mMDXLGeAKsP0rY
-			// OAUTH cliend id: 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
-			gapi.load('client:auth2', function() {
-				gapi.client.init({
-					'apiKey': 'AIzaSyAJRuzYzKzpWOSoFFD33mMDXLGeAKsP0rY',
-					'clientId': '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',
-					'discoveryDocs': ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
-					'scope': 'https://www.googleapis.com/auth/spreadsheets'
-				}).then(function() {
-					// 使用 Google Sheets API 將數據發送到表格中
-					gapi.client.sheets.spreadsheets.values.append({
-						spreadsheetId: '1GQeROSavIh7OyWX87uBclUlUkXJ3U-JZkqREsFHW8NE',
-						range: 'monsterAP', // 要附加到的範圍
-						valueInputOption: 'RAW',
-						resource: {
-							values: [
-								[hunt, monsterAP, attack]
-							]
-						}
-					}).then(function(response) {
-						console.log('Data successfully appended:', response);
-					}, function(error) {
-						console.error('Error appending data:', error);
-					});
-				});
-			});
-        }
-    </script>
-<script src="https://apis.google.com/js/api.js"></script>
+			var final_ap = base_ap + over_ap + race_ap.value * 0.8;
+			final_ap = Math.floor(final_ap);
+			ap.innerHTML = '<font color="red">' + final_ap + '</font>';
+		}
+	</script>
 </body>
 </html>
