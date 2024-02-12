@@ -32,6 +32,12 @@
 			['カーマス', '灰色の森', 830, 70],
 			['カーマス', '[デキア] 灰色の森', 1000, 70]
 		];
+		const icon_data = {
+			'人間': 'human.png',
+			'亜人': 'demi.png',
+			'動物': 'animal.png',
+			'カーマス': 'kama.png',
+		};
 	</script>
 </head>
 <body>
@@ -44,9 +50,10 @@
         <input type="number" id="monsterAP" name="monsterAP" value="1000" onchange="recalc();"><br><br>
         <label for="attack">種族攻撃力：</label>
         <input type="number" id="attack" name="attack" value="1" onchange="recalc();"><br><br>
-		<label>ソフトキャップ</label>
+		<label>種族：</label><img id="race_img" src="" /><label id="race_text"></label><br />
+		<label>ソフトキャップ：</label>
 		<label id="softcap"></label><br />
-		<label>理論攻撃力</label>
+		<label>理論攻撃力：</label>
 		<label id="ap"></label><br />
         <!--<input type="submit" value="計算">-->
     </form>
@@ -62,6 +69,8 @@
 		
 		var softcap = document.getElementById("softcap");
 		var ap = document.getElementById("ap");
+		var icon_c = document.getElementById("race_img");
+		var race_text_c = document.getElementById("race_text");
 		var mon_ap = document.getElementById("monsterAP");
 		var race_ap = document.getElementById("attack");
 		
@@ -82,6 +91,8 @@
 			var final_ap = base_ap + over_ap + race_ap.value * 0.8;
 			final_ap = Math.floor(final_ap);
 			ap.innerHTML = '<font color="red">' + final_ap + '</font>';
+			icon_c.src = icon_data[val[RACE]];
+			race_text_c.innerHTML = '<font color="red">' + val[RACE] + '</font>';
 		}
 	</script>
 </body>
