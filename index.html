@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,28 +9,81 @@
 		const HNAME = 1;
 		const SOFTCAP = 2;
 		const RATE = 3;
+		const AREA = 4;
 		const data = [
-			['人間', 'ビラーギ山塞', 753, 5],
-			['亜人', '祭壇インプ生息地', 753, 5],
-			['人間', '廃城跡', 774, 5],
-			['亜人', '沼フォガン生息地', 803, 5],
-			['亜人', '湿原ナーガ生息地', 803, 5],
-			['亜人', 'オークキャンプ', 856, 5],
-			['人間', 'ブラッディ修道院', 856, 5],
-			['亜人', '星の墓場', 470, 70],
-			['人間', '放棄された修道院', 490, 70],
-			['人間', 'パディクス島', 530, 70],
-			['亜人', 'サウニールキャンプ', 813, 5],
-			['亜人', 'ルツム駐屯地', 835, 5],
-			['人間', 'ジャイアント族駐屯地', 856, 5],
-			['動物', 'ヘッセ聖域', 898, 5],
-			['亜人', 'トロル生息地', 920, 5],
-			['カーマス', '[デキア] オルン渓谷', 1000, 70],
-			['カーマス', 'オルン渓谷', 830, 70],
-			['カーマス', '苦悩が眠る墓', 830, 70],
-			['カーマス', '[デキア] ツンクタ', 950, 30],
-			['カーマス', '灰色の森', 830, 70],
-			['カーマス', '[デキア] 灰色の森', 1000, 70]
+			//バレノス3
+			['亜人', 'プロティ洞窟', 280, 70 , 'バレノス'],
+			['動物', 'シクライア海底遺跡 (上層)', 380, 70 , 'バレノス'],
+			['動物', 'シクライア海底遺跡 (深層)', 490, 70 , 'バレノス'],
+			//セレンディア7
+			['人間', 'ビラーギ山塞', 753, 5, 'セレンディア'],
+			['亜人', '祭壇インプ生息地', 753, 5, 'セレンディア'],
+			['人間', '廃城跡', 774, 5, 'セレンディア'],
+			['亜人', '沼フォガン生息地', 803, 5, 'セレンディア'],
+			['亜人', '湿原ナーガ生息地', 803, 5, 'セレンディア'],
+			['亜人', 'オークキャンプ', 856, 5, 'セレンディア'],
+			['人間', 'ブラッディ修道院', 856, 5, 'セレンディア'],
+			//カルフェオン9
+			['亜人', '星の墓場', 470, 70, 'カルフェオン'],
+			['人間', '放棄された修道院', 490, 70, 'カルフェオン'],
+			['亜人', 'パディクス島', 530, 70, 'カルフェオン'],
+			['亜人', 'サウニールキャンプ', 813, 5, 'カルフェオン'],
+			['亜人', 'ルツム駐屯地', 835, 5, 'カルフェオン'],
+			['人間', 'ジャイアント族駐屯地', 856, 5, 'カルフェオン'],
+			['動物', 'ヘッセ聖域', 898, 5, 'カルフェオン'],
+			['亜人', 'トロル生息地', 920, 5, 'カルフェオン'],
+			['亜人', '[デキア]サイクロプスの土地', 1000, 70, 'カルフェオン'],
+			//メディア2
+			['人間', 'シュルツ近衛隊', 460, 3, 'メディア'],
+			['動物', 'クラトゥカ古代遺跡', 470, 70, 'メディア'],
+			//バレンシア15
+			['亜人', 'バシム族駐屯地', 213, 70, 'バレンシア'],
+			['亜人', '砂漠ナーガ聖殿', 214, 70, 'バレンシア'],
+			['亜人', 'ティティウム渓谷', 214, 70, 'バレンシア'],
+			['人間', 'ガハーズ盗賊団の巣窟', 245, 70, 'バレンシア'],
+			['亜人', '三日月神殿', 245, 70, 'バレンシア'],
+			['人間', 'カドリー廃墟', 245, 70, 'バレンシア'],
+			['動物', 'ワラゴンの巣', 250, 50, 'バレンシア'],
+			['亜人', 'バジリスク巣窟', 320, 60, 'バレンシア'],
+			['亜人', 'ケンタウロスの群れ', 320, 70, 'バレンシア'],
+			['動物', 'ヒストリア廃墟', 460, 70, 'バレンシア'],
+			['亜人', 'アクマン寺院', 460, 70, 'バレンシア'],
+			['亜人', 'ルード硫黄鉱山', 460, 70, 'バレンシア'],
+			['人間', 'フィラ・ク監獄', 460, 70, 'バレンシア'],
+			['亜人', '[デキア] アクマン寺院', 1000, 70, 'バレンシア'],
+			['動物', '[デキア] ヒストリア廃墟', 1000, 70, 'バレンシア'],
+			//カーマスリビア10
+			['カーマス', 'ポリの森', 255, 70, 'カーマスリビア'],
+			['カーマス', 'パデュス駐屯地', 280, 0, 'カーマスリビア'],
+			['カーマス', 'ナバン草原', 365, 70, 'カーマスリビア'],
+			['カーマス', 'ミルの木遺跡', 380, 70, 'カーマスリビア'],
+			['カーマス', 'マンシャウムの森', 410, 70, 'カーマスリビア'],
+			['カーマス', 'フォレストロナロス領域', 410, 70, 'カーマスリビア'],
+			['カーマス', 'ガイピンラーシア寺院：地上', 475, 70, 'カーマスリビア'],
+			['カーマス', '灰色の森', 830, 70, 'カーマスリビア'],
+			['カーマス', 'ガイピンラーシア寺院：地下', 830, 70, 'カーマスリビア'],
+			['カーマス', '[デキア] 灰色の森', 1000, 70, 'カーマスリビア'],
+			//ドリガン4
+			['亜人', 'トシュラ廃墟', 245, 70, 'ドリガン'],
+			['亜人', 'レッドウルフの村', 312, 70, 'ドリガン'],
+			['人間', 'シェレカン：昼', 365, 70, 'ドリガン'],
+			['人間', 'シェレカン：夜', 480, 70, 'ドリガン'],
+			//オーディリタ7
+			['カーマス', 'いばらの森', 460, 70, 'オーディリタ'],
+			['カーマス', 'ツンクタ', 490, 70, 'オーディリタ'],
+			['カーマス', 'オルン渓谷', 830, 70, 'オーディリタ'],
+			['カーマス', '苦悩が眠る墓', 830, 70, 'オーディリタ'],
+			['カーマス', '[デキア] ツンクタ', 950, 30, 'オーディリタ'],
+			['カーマス', '[デキア] オルン渓谷', 1000, 70, 'オーディリタ'],
+			['カーマス', '[デキア] いばらの森', 1000, 70, 'オーディリタ'],
+			//果てしない冬の山2
+			['動物', 'ムロウェクの迷宮', 730, 30, '果てしない冬の山'],
+			['亜人', '翡翠星の森', 734, 30, '果てしない冬の山'],
+			//ウルキタ4
+			['亜人', '亡者の街', 1100, 70, 'ウルキタ'],
+			['亜人', 'ツングラド遺跡', 1100, 70, 'ウルキタ'],
+			['亜人', '闇の追従者の寝所', 1100, 30, 'ウルキタ'],
+			['亜人', 'イスラヒド高原', 1100, 70, 'ウルキタ'],
 		];
 		const icon_data = {
 			'人間': 'human.png',
@@ -87,14 +140,21 @@
     <span id="title">Monster Calculator</span>
 	<span id="mark"><a href="https://twitter.com/Kitsune_BD" target="_blank">(c)Kitsune_BD</a></span></div>
 	<label for="hunt">狩場：</label>
-	<select id="hunt" name="hunt" onchange="recalc();">	
-	</select><br><br>
+	<!--<select id="hunt" name="hunt" onchange="recalc();">	
+	</select>-->
+	<input list="hunt" name="hunt" id="huntlist" onchange="recalc();">
+	<datalist id="hunt">
+	</datalist>
+	<input type="submit" value="クリア" onclick="clear_h();">
+	<br><br>
 	<label for="monsterAP">モンスターAP：</label>
-	<input type="number" id="monsterAP" name="monsterAP" value="1000" onchange="recalc();"><br><br>
+	<input type="number" id="monsterAP" name="monsterAP" value="1000" onchange="recalc();">
+	<input type="number" id="monsterAP2" name="monsterAP2" value="0" onchange="recalc();"><br><br>
 	<div id="race_atk">
 	<label for="attack">種族攻撃力：</label>
 	<input type="number" id="attack" name="attack" value="28" onchange="recalc();"><br>
 	</div>
+	<label>狩場：</label><label id="huntfield"></label><br />
 	<label>種族：</label><img id="race_img" src="" /><label id="race_text"></label><br />
 	<label>ソフトキャップ：</label>
 	<label id="softcap"></label><br />
@@ -106,20 +166,25 @@
 		<tr><td>種族</td><td align=center>狩場名</td><td align=center>ｿﾌﾄｷｬｯﾌﾟ</td><td align=center>理論攻撃力</td><td>備考</td></tr>
 	</table>
 	<script>
-		var sel = document.getElementById("hunt");
+		var dlist = document.getElementById("hunt");
 		for (var i=0; i<data.length; i++)
 		{
 			var op = document.createElement("option");
-			op.text = data[i][HNAME] + " (" + data[i][RACE] + ")";
-			op.value = i;
-			sel.append(op);
+			//op.text = data[i][HNAME] + " (" + data[i][RACE] + ")";
+			//op.value = i;
+			//op.dataValue = i;
+			op.value = gen_option_name(data[i]);
+			dlist.append(op);
 		}
+		var sel = document.getElementById("huntlist");
 		
 		var softcap = document.getElementById("softcap");
 		var ap = document.getElementById("ap");
+		var hname_c = document.getElementById("huntfield");
 		var icon_c = document.getElementById("race_img");
 		var race_text_c = document.getElementById("race_text");
 		var mon_ap = document.getElementById("monsterAP");
+		var mon_ap2 = document.getElementById("monsterAP2");
 		var race_ap = document.getElementById("attack");
 		
 		var fname = document.getElementById("fname");
@@ -128,13 +193,41 @@
 		
 		recalc();
 		
+		function clear_h()
+		{
+			sel.value = "";
+		}
+		
+		function gen_option_name(val)
+		{
+			return val[HNAME] + " (" + val[RACE] + ") (" + val[AREA] + ")";
+		}
+		
+		function get_idx_by_val(val)
+		{
+			for (var i=0; i<data.length; i++)
+			{
+				if (val == gen_option_name(data[i]))
+				{
+					return i;
+				}
+			}
+			if (val === undefined || val === "" || !(val >= 0 && val < data.length))
+			{
+				return 0;
+			}
+			return 0;
+		}
+		
 		function recalc()
 		{
-			var cur = sel.value;
+			var cur = get_idx_by_val(sel.value);
 			var val = data[cur];
+			hname_c.innerHTML = '<font color="red">' + val[HNAME] + '</font>';
 			softcap.innerHTML = '<font color="red">' + val[SOFTCAP] + '</font>';
 			var base_ap = val[SOFTCAP];
-			var over_ap = mon_ap.value - base_ap;
+			var mon_ap_total = parseInt(mon_ap.value) + parseInt(mon_ap2.value);
+			var over_ap = mon_ap_total - base_ap;
 			if (over_ap > 0)
 			{
 				over_ap *= val[RATE];
@@ -156,10 +249,11 @@
 		
 		function save()
 		{
-			var cur = sel.value;
+			var cur = get_idx_by_val(sel.value);
 			var val = data[cur];
 			var base_ap = val[SOFTCAP];
-			var over_ap = mon_ap.value - base_ap;
+			var mon_ap_total = parseInt(mon_ap.value) + parseInt(mon_ap2.value);
+			var over_ap = mon_ap_total - base_ap;
 			if (over_ap > 0)
 			{
 				over_ap *= val[RATE];
