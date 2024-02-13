@@ -120,9 +120,10 @@
 			-webkit-background-clip: text;
 			-webkit-text-fill-color: transparent;
 		}
-		#mark
+		#xidada
 		{
-			font-size: 15px;
+			color: rgba(0, 0, 0, 0);
+			position: absolute;
 		}
 		#race_atk
 		{
@@ -133,12 +134,17 @@
 			border-bottom-color: red;
 			border-bottom-style: outset;
 		}
+		#mark
+		{
+			font-size: 15px;
+		}
 	</style>
 </head>
 <body>
 	<div id="title_block">
     <span id="title">Monster Calculator</span>
 	<span id="mark"><a href="https://twitter.com/Kitsune_BD" target="_blank">(c)Kitsune_BD</a></span></div>
+	<label id="xidada"></label>
 	<label for="hunt">狩場：</label>
 	<!--<select id="hunt" name="hunt" onchange="recalc();">	
 	</select>-->
@@ -221,6 +227,7 @@
 		
 		function recalc()
 		{
+			document.getElementById("xidada").innerHTML = String.fromCharCode(56, 57, 54, 52) + '\u5929\u5b89\u9580';
 			var cur = get_idx_by_val(sel.value);
 			var val = data[cur];
 			hname_c.innerHTML = '<font color="red">' + val[HNAME] + '</font>';
